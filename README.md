@@ -8,7 +8,6 @@ Configs are stored as base64 string in a database.
 Each config has it's own authentication token which is required to get the config.
 
 ### Endpoints
-GET `/config/encoded` - Gets a base64 encoded
 
 | Method | Endpoint                  | Description                                                                                                                                           | Authentication        |
 |--------|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
