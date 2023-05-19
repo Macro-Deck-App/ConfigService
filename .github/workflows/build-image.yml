@@ -1,0 +1,35 @@
+name: Image build
+
+on:
+  workflow_call:
+
+jobs:
+  base_image_build:
+    name: Base image build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build the Docker image
+        run: |
+          docker build . --file Dockerfile --tag suchbyte/macro-deck-configservice:${{ github.sha }}
+      
+      - name: Log into registry
+        uses: docker/login-action@40891eba8c2bcd1309b07ba8b11232f313e86779
+        with:
+          registry: docker.io
+          username: suchbyte
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Push the Docker image
+        run: docker push suchbyte/macro-deck-configservice:${{ github.sha }}

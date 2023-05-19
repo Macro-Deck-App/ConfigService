@@ -1,0 +1,22 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:7163",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "LocalDevelopment",
+        "HOSTING_PORT": "7163",
+        "DB_HOST" : "127.0.0.1",
+        "DB_PORT" : "5432",
+        "DB_USER" : "configservice",
+        "DB_PASSWORD" : "test",
+        "DB_DATABASE" : "configservice",
+        "ADMIN_ACCESS_TOKEN" : "testtest"
+      }
+    }
+  }
+}
