@@ -9,15 +9,15 @@ jobs:
     name: Build image
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
-  deploy:
-    name: Updating the image on the server
-    needs: [build_image]
-    uses: appleboy/ssh-action@v0.1.10
-    with:
-      host: ${{ secrets.DOCKER_HOST }}
-      username: ${{ secrets.GITHUBWORKFLOWS_USER }}
-      password: ${{ secrets.GITHUBWORKFLOWS_USER_PASSWORD }}
-      port: ${{ secrets.DOCKER_HOST_PORT }}
-      script: |
-        cd "scripts/ConfigService/"
-        ./update_develop.sh dev_${{ github.sha }}
+  deploy_test:
+    - name: Updating the image on the server
+      needs: [ build_image ]
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.DOCKER_HOST }}
+        username: ${{ secrets.GITHUBWORKFLOWS_USER }}
+        password: ${{ secrets.GITHUBWORKFLOWS_USER_PASSWORD }}
+        port: ${{ secrets.DOCKER_HOST_PORT }}
+        script: |
+          cd "scripts/ConfigService/"
+          ./update_develop.sh dev_${{ github.sha }}
