@@ -22,7 +22,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag suchbyte/macro-deck-configservice:${{ github.sha }}
+          docker build . --file src/MacroDeck.ConfigService/Dockerfile --tag suchbyte/macro-deck-configservice:${{ github.sha }}
       
       - name: Log into registry
         uses: docker/login-action@40891eba8c2bcd1309b07ba8b11232f313e86779
