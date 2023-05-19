@@ -23,4 +23,4 @@ jobs:
           port: ${{ secrets.DOCKER_HOST_PORT }}
           script: |
             cd "scripts/ConfigService/"
-            ./update_develop.sh dev_${{ github.sha }}
+            ./update_develop.sh ${{ github.sha }}
