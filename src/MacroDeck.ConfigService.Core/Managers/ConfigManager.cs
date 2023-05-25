@@ -1,5 +1,6 @@
 using MacroDeck.ConfigService.Core.DataAccess.Entities;
 using MacroDeck.ConfigService.Core.DataAccess.RepositoryInterfaces;
+using MacroDeck.ConfigService.Core.DataTypes;
 using MacroDeck.ConfigService.Core.Extensions;
 using MacroDeck.ConfigService.Core.ManagerInterfaces;
 using MacroDeck.ConfigService.Core.Utils;
@@ -16,13 +17,17 @@ public class ConfigManager : IConfigManager
         _serviceConfigRepository = serviceConfigRepository;
     }
 
-    public async Task<ActionResult<string>> GetConfigEncoded(string name)
+    public async Task<ActionResult<EncodedConfig>> GetConfigEncoded(string name)
     {
         var existingConfigEntity = await _serviceConfigRepository.FindAsync(x => x.Name == name);
         
         return existingConfigEntity == null
             ? new NotFoundResult()
-            : existingConfigEntity.ConfigValue;
+            : new EncodedConfig
+            {
+                Version = existingConfigEntity.Version,
+                ConfigBase64 = existingConfigEntity.ConfigValue
+            };
     }
 
     public async Task<ActionResult<string>> GetConfigDecoded(string name)
