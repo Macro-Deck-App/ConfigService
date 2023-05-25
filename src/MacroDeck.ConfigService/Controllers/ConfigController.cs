@@ -1,5 +1,6 @@
 using MacroDeck.ConfigService.Core;
 using MacroDeck.ConfigService.Core.Authorization;
+using MacroDeck.ConfigService.Core.DataTypes;
 using MacroDeck.ConfigService.Core.ManagerInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ public class ConfigController : ControllerBase
 
     [HttpGet("encoded")]
     [ServiceFilter(typeof(AccessTokenFilter))]
-    public async Task<ActionResult<string>> GetConfigEncoded()
+    public async Task<ActionResult<EncodedConfig>> GetConfigEncoded()
     {
         if (!HttpContext.Request.Headers.TryGetValue(Constants.ConfigNameHeader, out var name))
         {
