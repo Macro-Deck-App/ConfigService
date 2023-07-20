@@ -1,6 +1,6 @@
-using MacroDeck.ConfigService.Core.DataAccess.Extensions;
 using MacroDeck.ConfigService.Core.Helper;
 using MacroDeck.ConfigService.StartupConfig;
+using MacroDeck.ConfigService.Utils;
 using Serilog;
 
 namespace MacroDeck.ConfigService;
@@ -11,6 +11,9 @@ public static class Program
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+        
+        DatabaseMigrationUtil.MigrateDatabase();
+        
         var app = Host.CreateDefaultBuilder(args)
             .ConfigureSerilog()
             .ConfigureWebHostDefaults(hostBuilder =>
@@ -22,7 +25,6 @@ public static class Program
                 });
             }).Build();
 
-        await app.Services.MigrateDatabaseAsync();
         await app.RunAsync();
     }
 

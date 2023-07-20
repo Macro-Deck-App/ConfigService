@@ -7,7 +7,7 @@ public class ServiceConfigEntityConfig : BaseEntityConfig<ServiceConfigEntity>
 {
     public ServiceConfigEntityConfig()
     {
-        TableName = "configs";
+        TableName = "config";
         ColumnPrefix = "cfg_";
     }
 
@@ -16,9 +16,7 @@ public class ServiceConfigEntityConfig : BaseEntityConfig<ServiceConfigEntity>
         base.Configure(builder);
 
         builder.ToTable(TableName, schema: Schema);
-
-        builder.HasIndex(x => x.Name).IsUnique();
-
+        
         builder.Property(x => x.Name)
             .HasColumnName(ColumnPrefix + "name")
             .IsRequired();
