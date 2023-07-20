@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+        <PackageReference Include="Evolve" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
           <PrivateAssets>all</PrivateAssets>
@@ -33,6 +34,10 @@
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Migrations\*.sql" CopyToPublishDirectory="Always" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
 </Project>
