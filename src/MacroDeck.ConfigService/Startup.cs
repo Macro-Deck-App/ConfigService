@@ -23,10 +23,6 @@ public class Startup
         app.UseCors("AllowAny");
         //app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseFileServer();
-        app.UseWebSockets(new WebSocketOptions
-        {
-            KeepAliveInterval = TimeSpan.FromMinutes(2)
-        });
         app.UseRouting();
         app.UseEndpoints(endpoints =>
         {
