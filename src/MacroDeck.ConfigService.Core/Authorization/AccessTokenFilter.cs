@@ -1,5 +1,4 @@
 using MacroDeck.ConfigService.Core.DataAccess.RepositoryInterfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -32,14 +31,14 @@ public class AccessTokenFilter : IAsyncAuthorizationFilter
 
         if (!context.HttpContext.Request.Headers.TryGetValue(Constants.ConfigNameHeader, out var configName))
         {
-            context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+            context.Result = new UnauthorizedResult();
             return;
         }
 
         var valid = await _serviceConfigRepository.VerifyConfigToken(configName.ToString(), accessToken.ToString());
         if (!valid)
         {
-            context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+            context.Result = new UnauthorizedResult();
         }
     }
 }
