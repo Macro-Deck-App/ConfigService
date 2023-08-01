@@ -15,7 +15,10 @@
         "DB_USER" : "configservicemaster",
         "DB_PASSWORD" : "test",
         "DB_DATABASE" : "configservicetest",
-        "ADMIN_ACCESS_TOKEN" : "testtest"
+        "ADMIN_ACCESS_TOKEN" : "testtest",
+        "JWT_SECRET": "thisisasupersecrettestsecret123",
+        "JWT_ISSUER": "localhost",
+        "JWT_AUDIENCE": "localhost"
       }
     }
   }

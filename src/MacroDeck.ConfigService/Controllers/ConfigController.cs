@@ -2,6 +2,7 @@ using MacroDeck.ConfigService.Core;
 using MacroDeck.ConfigService.Core.Authorization;
 using MacroDeck.ConfigService.Core.DataTypes;
 using MacroDeck.ConfigService.Core.ManagerInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MacroDeck.ConfigService.Controllers;
@@ -26,13 +27,6 @@ public class ConfigController : ControllerBase
         }
         return await _configManager.GetConfigEncoded(name.ToString());
     }
-
-    [HttpGet("{name}")]
-    [ServiceFilter(typeof(AdminTokenFilter))]
-    public async Task<ActionResult<string>> GetConfigDecoded(string name)
-    {
-        return await _configManager.GetConfigDecoded(name);
-    }
     
     [HttpGet("version")]
     [ServiceFilter(typeof(AccessTokenFilter))]
@@ -46,20 +40,48 @@ public class ConfigController : ControllerBase
         return await _configManager.GetConfigVersion(name.ToString());
     }
 
+    [HttpGet]
+    [Authorize]
+    public async Task<ActionResult<List<string>>> ListConfigs()
+    {
+        return await _configManager.ListConfigs();
+    }
+
+    [HttpGet("{name}")]
+    [Authorize]
+    public async Task<ActionResult<string>> GetConfigDecoded(string name)
+    {
+        return await _configManager.GetConfigDecoded(name);
+    }
+
     [HttpPost("{name}")]
-    [ServiceFilter(typeof(AdminTokenFilter))]
-    public async Task<IActionResult> AddUpdateConfig(string name)
+    [Authorize]
+    public async Task<IActionResult> CreateConfig(string name)
+    {
+        return await _configManager.CreateConfig(name);
+    }
+    
+    [HttpPut("{name}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateConfig(string name)
     {
         using var reader = new StreamReader(Request.Body);
         var configValue = await reader.ReadToEndAsync();
         
-        return await _configManager.CreateUpdateConfig(name, configValue);
+        return await _configManager.UpdateConfig(name, configValue);
     }
 
-    [HttpPost("{name}/settoken")]
-    [ServiceFilter(typeof(AdminTokenFilter))]
-    public async Task<IActionResult> UpdateConfigAccessToken(string name, [FromBody] string newToken)
+    [HttpDelete("{name}")]
+    [Authorize]
+    public async Task DeleteConfig(string name)
     {
-        return await _configManager.UpdateAccessToken(name, newToken);
+        await _configManager.DeleteConfig(name);
+    }
+
+    [HttpPost("{name}/token/generate")]
+    [Authorize]
+    public async Task<string> GenerateAccessToken(string name)
+    {
+        return await _configManager.GenerateAccessToken(name);
     }
 }

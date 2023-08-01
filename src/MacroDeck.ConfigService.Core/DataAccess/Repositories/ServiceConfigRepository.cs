@@ -15,6 +15,7 @@ public class ServiceConfigRepository : BaseRepository<ServiceConfigEntity>, ISer
     public async Task<bool> VerifyConfigToken(string configName, string accessToken)
     {
         var serviceConfig = await Context.Set<ServiceConfigEntity>()
+            .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Name.ToLower() == configName.ToLower());
 
         return serviceConfig != null &&
@@ -24,8 +25,18 @@ public class ServiceConfigRepository : BaseRepository<ServiceConfigEntity>, ISer
     public async Task<int?> GetVersion(string configName)
     {
         return await Context.Set<ServiceConfigEntity>()
+            .AsNoTracking()
             .Where(x => x.Name == configName)
             .Select(x => x.Version)
             .SingleOrDefaultAsync();
+    }
+
+    public Task<List<string>> ListConfigNames()
+    {
+        return Context.Set<ServiceConfigEntity>()
+            .AsNoTracking()
+            .OrderBy(x => x.Name)
+            .Select(x => x.Name)
+            .ToListAsync();
     }
 }

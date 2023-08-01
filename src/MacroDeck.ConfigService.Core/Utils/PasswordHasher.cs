@@ -24,8 +24,13 @@ public static class PasswordHasher
         return (hashedPassword, salt);
     }
 
-    public static bool VerifyPassword(string enteredPassword, string storedHash, string storedSalt)
+    public static bool VerifyPassword(string? enteredPassword, string storedHash, string storedSalt)
     {
+        if (string.IsNullOrWhiteSpace(enteredPassword))
+        {
+            return false;
+        }
+        
         var saltBytes = Convert.FromBase64String(storedSalt);
         
         using var hmac = new HMACSHA512(saltBytes);
