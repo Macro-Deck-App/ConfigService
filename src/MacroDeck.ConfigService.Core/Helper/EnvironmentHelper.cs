@@ -14,6 +14,9 @@ public class EnvironmentHelper
     private const string DatabaseUserVariable = "DB_USER";
     private const string DatabasePasswordVariable = "DB_PASSWORD";
     private const string DatabaseDatabaseVariable = "DB_DATABASE";
+    private const string JwtSecretVariable = "JWT_SECRET";
+    private const string JwtIssuerVariable = "JWT_ISSUER";
+    private const string JwtAudienceVariable = "JWT_AUDIENCE";
 
     public static bool IsLocalDevelopment => IsCurrentEnvironment("LocalDevelopment");
     public static bool IsTesting => IsCurrentEnvironment("Testing");
@@ -26,6 +29,9 @@ public class EnvironmentHelper
     public static string DatabaseUser => GetStringFromEnvironmentVariable(DatabaseUserVariable);
     public static string DatabasePassword => GetStringFromEnvironmentVariable(DatabasePasswordVariable);
     public static string DatabaseDatabase => GetStringFromEnvironmentVariable(DatabaseDatabaseVariable);
+    public static string JwtSecret => GetStringFromEnvironmentVariable(JwtSecretVariable);
+    public static string JwtIssuer => GetStringFromEnvironmentVariable(JwtIssuerVariable);
+    public static string JwtAudience => GetStringFromEnvironmentVariable(JwtAudienceVariable);
 
     private static bool IsCurrentEnvironment(string environmentToCompare)
     {

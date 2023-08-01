@@ -13,7 +13,9 @@ RUN dotnet build "MacroDeck.ConfigService.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "MacroDeck.ConfigService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+FROM ghcr.io/macro-deck-app/configservice-ui-base:latest AS ui
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=ui dist/ ./wwwroot
 ENTRYPOINT ["dotnet", "MacroDeck.ConfigService.dll"]

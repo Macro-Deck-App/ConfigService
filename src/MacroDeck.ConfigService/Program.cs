@@ -1,4 +1,5 @@
 using MacroDeck.ConfigService.Core.Helper;
+using MacroDeck.ConfigService.Core.ManagerInterfaces;
 using MacroDeck.ConfigService.StartupConfig;
 using MacroDeck.ConfigService.Utils;
 using Serilog;
@@ -24,7 +25,8 @@ public static class Program
                     options.ListenAnyIP(EnvironmentHelper.HostingPort);
                 });
             }).Build();
-
+        
+        await app.Services.GetRequiredService<IUserManager>().CreateDefaultUser();
         await app.RunAsync();
     }
 
