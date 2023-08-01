@@ -26,17 +26,21 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build the Docker image
+          
+      - name: Download ui image
         run: |
-          docker build . --file src/MacroDeck.ConfigService/Dockerfile --tag suchbyte/macro-deck-configservice:${{ github.sha }}
-      
-      - name: Log into registry
+          docker pull ghcr.io/macro-deck-app/configservice-ui-base:latest
+
+      - name: Log into docker registry
         uses: docker/login-action@40891eba8c2bcd1309b07ba8b11232f313e86779
         with:
           registry: docker.io
           username: suchbyte
           password: ${{ secrets.DOCKER_PASSWORD }}
-          
+
+      - name: Build the Docker image
+        run: |
+          docker build . --file src/MacroDeck.ConfigService/Dockerfile --tag suchbyte/macro-deck-configservice:${{ github.sha }}
+      
       - name: Push the Docker image
         run: docker push suchbyte/macro-deck-configservice:${{ github.sha }}

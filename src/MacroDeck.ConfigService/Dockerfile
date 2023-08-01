@@ -1,4 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0.5-bullseye-slim-amd64 AS base
+FROM ghcr.io/macro-deck-app/configservice-ui-base:latest AS ui
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0.302-bullseye-slim-amd64 AS build
@@ -13,7 +14,6 @@ RUN dotnet build "MacroDeck.ConfigService.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "MacroDeck.ConfigService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM ghcr.io/macro-deck-app/configservice-ui-base:latest AS ui
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
