@@ -17,10 +17,9 @@ jobs:
       - name: Updating the image on the server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DOCKER_TEST_HOST }}
+          host: ${{ secrets.TEST_SSH_HOST }}
           username: ${{ secrets.GITHUBWORKFLOWS_USER }}
-          password: ${{ secrets.GITHUBWORKFLOWS_USER_PASSWORD }}
-          port: ${{ secrets.DOCKER_HOST_PORT }}
+          key: ${{ secrets.TEST_SSH_PRIVATE_KEY }}
           script: |
             cd "scripts/ConfigService/"
             ./update_develop.sh ${{ github.sha }}
