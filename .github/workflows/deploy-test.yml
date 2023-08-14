@@ -9,6 +9,7 @@ jobs:
     name: Build image
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
+    
   deploy_develop:
     name: Deploy test
     needs: [ build_image ]

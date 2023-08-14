@@ -9,6 +9,7 @@ jobs:
     name: Build image
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
+    
   deploy_production:
     name: Deploy production
     needs: [ build_image ]
@@ -17,10 +18,8 @@ jobs:
       - name: Updating the image on the server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DOCKER_HOST }}
-          username: ${{ secrets.GITHUBWORKFLOWS_USER }}
-          password: ${{ secrets.GITHUBWORKFLOWS_USER_PASSWORD }}
-          port: ${{ secrets.DOCKER_HOST_PORT }}
+          host: ${{ secrets.LIVE_DEPLOY_HOST }}
+          username: deploy
+          key: ${{ secrets.LIVE_DEPLOY_KEY }}
           script: |
-            cd "scripts/ConfigService/"
-            ./update_production.sh ${{ github.sha }}
+            ./deploy-service.sh config-service ${{ github.sha }}
