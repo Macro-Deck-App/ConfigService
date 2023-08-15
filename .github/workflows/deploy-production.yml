@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Updating the image on the server
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.LIVE_DEPLOY_HOST }}
           username:  ${{ secrets.LIVE_DEPLOY_HOST }}
