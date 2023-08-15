@@ -21,7 +21,7 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/deploy.key
           chmod 600 ~/.ssh/deploy.key
           cat >>~/.ssh/config <<END
-          Host staging
+          Host production
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/deploy.key
@@ -33,5 +33,4 @@ jobs:
           SSH_HOST: ${{ secrets.LIVE_DEPLOY_HOST }}
           
       - name: Updating the image on the server
-        run: |
-          ./deploy-service.sh config-service ${{ github.sha }}
+        run: ssh production ./deploy-service.sh config-service ${{ github.sha }}
