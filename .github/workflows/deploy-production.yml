@@ -33,4 +33,4 @@ jobs:
           SSH_HOST: ${{ secrets.LIVE_DEPLOY_HOST }}
           
       - name: Updating the image on the server
-        run: ssh production ./deploy-service.sh config-service ${{ github.sha }}
+        run: ssh production './deploy-service.sh config-service ${{ github.sha }}'
