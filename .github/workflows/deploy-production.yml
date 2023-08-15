@@ -15,22 +15,10 @@ jobs:
     needs: [ build_image ]
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/deploy.key
-          chmod 600 ~/.ssh/deploy.key
-          cat >>~/.ssh/config <<END
-          Host production
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/deploy.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{ secrets.LIVE_DEPLOY_USER }}
-          SSH_KEY: ${{ secrets.LIVE_DEPLOY_KEY }}
-          SSH_HOST: ${{ secrets.LIVE_DEPLOY_HOST }}
-          
       - name: Updating the image on the server
-        run: ssh production './deploy-service.sh config-service ${{ github.sha }}'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.LIVE_DEPLOY_HOST }}
+          username:  ${{ secrets.LIVE_DEPLOY_HOST }}
+          key: ${{ secrets.LIVE_DEPLOY_KEY }}
+          script: ./deploy-service.sh config-service ${{ github.sha }}
