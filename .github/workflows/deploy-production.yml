@@ -19,6 +19,6 @@ jobs:
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.LIVE_DEPLOY_HOST }}
-          username:  ${{ secrets.LIVE_DEPLOY_HOST }}
+          username:  ${{ secrets.LIVE_DEPLOY_USER }}
           key: ${{ secrets.LIVE_DEPLOY_KEY }}
           script: ./deploy-service.sh config-service ${{ github.sha }}
