@@ -16,9 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Updating the image on the server
-        uses: appleboy/ssh-action@v1.0.0
+        uses:  Macro-Deck-App/Actions/deploy@main
         with:
           host: ${{ secrets.LIVE_DEPLOY_HOST }}
-          username:  ${{ secrets.LIVE_DEPLOY_USER }}
+          user: ${{ secrets.LIVE_DEPLOY_USER }}
           key: ${{ secrets.LIVE_DEPLOY_KEY }}
-          script: ./deploy-service.sh config-service ${{ github.sha }}
+          sha: ${{ github.sha }}
+          service: config-service
