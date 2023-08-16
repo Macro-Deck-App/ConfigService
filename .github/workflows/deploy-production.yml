@@ -21,5 +21,6 @@ jobs:
           host: ${{ secrets.LIVE_DEPLOY_HOST }}
           user: ${{ secrets.LIVE_DEPLOY_USER }}
           key: ${{ secrets.LIVE_DEPLOY_KEY }}
+          known-hosts: ${{ secrets.LIVE_DEPLOY_KNOWN_HOSTS }}
           sha: ${{ github.sha }}
           service: config-service
