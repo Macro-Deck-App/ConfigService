@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Updating the image on the server
-        uses: appleboy/ssh-action@v1.0.0
+        uses:  Macro-Deck-App/Actions/deploy@main
         with:
-          host: ${{ secrets.TEST_SSH_HOST }}
-          username: ${{ secrets.GITHUBWORKFLOWS_USER }}
-          key: ${{ secrets.TEST_SSH_PRIVATE_KEY }}
-          script: |
-            cd "scripts/ConfigService/"
-            ./update_develop.sh ${{ github.sha }}
+          host: ${{ secrets.TEST_DEPLOY_HOST }}
+          user: ${{ secrets.TEST_DEPLOY_USER }}
+          key: ${{ secrets.TEST_DEPLOY_KEY }}
+          known-hosts: ${{ secrets.TEST_DEPLOY_KNOWN_HOSTS }}
+          sha: ${{ github.sha }}
+          service: config-service
