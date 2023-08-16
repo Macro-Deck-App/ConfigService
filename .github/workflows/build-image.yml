@@ -26,8 +26,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build the Docker image
+          
+      - name: Download ui image
         run: |
           docker build . --file src/MacroDeck.ConfigService/Dockerfile --tag ghcr.io/macro-deck-app/config-service:${{ github.sha }}
       
