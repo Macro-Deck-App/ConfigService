@@ -3,6 +3,11 @@ name: Deploy test
 on:
   workflow_call:
   workflow_dispatch:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!develop'
 
 jobs:
   build_image:
