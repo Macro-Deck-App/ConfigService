@@ -15,6 +15,7 @@ jobs:
     
   deploy_develop:
     name: Deploy test
+    environment: staging
     needs: [ build_image ]
     runs-on: ubuntu-latest
     steps:
