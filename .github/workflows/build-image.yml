@@ -2,6 +2,10 @@ name: Image build
 
 on:
   workflow_call:
+  push:
+    branches:
+      - '**'
+      - '!develop'
 
 jobs:
   base_image_build:
