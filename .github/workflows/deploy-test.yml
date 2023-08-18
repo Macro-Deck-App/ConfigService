@@ -5,9 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - '**'
-      - '!main'
-      - '!develop'
+      - 'develop'
 
 jobs:
   build_image:
